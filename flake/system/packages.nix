@@ -2,11 +2,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  wrapped-bat = import ./wrapped/bat.nix { inherit pkgs; };
-in
-{
+}: let
+  wrapped-bat = import ./wrapped/bat.nix {inherit pkgs;};
+in {
   services.picom.enable = true;
 
   programs.nh = {
@@ -21,29 +19,56 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-
     # Coding
-    python3 lazygit luarocks
-    shellcheck powershell alejandra
+    python3
+    uv
+    lazygit
+    luarocks
+    shellcheck
+    powershell
+    alejandra
+    rustc
+    cargo
+    nodejs
+    typescript
+    nodemon
 
     # Shell
-    ghostty zoxide fzf
-    jq xclip eza ripgrep
+    ghostty
+    zoxide
+    fzf
+    jq
+    xclip
+    eza
+    ripgrep
+    wrapped-bat
+    feh
+    calcurse
+    tldr
+    starship
 
     rofi
 
     # nvim
-    yazi tree-sitter
-    gcc gnumake
+    yazi
+    tree-sitter
+    gcc
+    gnumake
 
     # Web
-    firefox wget curl httpie
+    firefox
+    wget
+    curl
+    httpie
+    librewolf
+
+    # College
+    libreoffice
+
+    # Social
+    discordo
 
     p7zip
-    starship
-    tldr
-    wrapped-bat
-    feh
     obsidian
     dnsmasq
     flameshot
@@ -52,7 +77,7 @@ in
     psmisc
     pavucontrol
     prismlauncher
-    calcurse
+    retroarch-free
   ];
 
   fonts = {

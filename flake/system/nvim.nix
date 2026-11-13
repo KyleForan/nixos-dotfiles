@@ -12,10 +12,17 @@
 
   environment.systemPackages = with pkgs; [
     lua-language-server
-    nil                      # nix LSP
+    nil # nix LSP
     nixpkgs-fmt
     pyright
+    black
     stylua
-    ripgrep fd gcc gnumake   # telescope, treesitter compile
+    ripgrep
+    fd
+    gcc
+    gnumake # telescope, treesitter compile
+    nixd
+    rust-analyzer
+    typescript-language-server
   ];
 }

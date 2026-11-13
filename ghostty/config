@@ -1,0 +1,7 @@
+window-padding-x = 10 
+window-padding-balance = true
+window-decoration = none
+
+theme = Catppuccin Frappe
+
+keybind = ctrl+o=text:\x15y\r

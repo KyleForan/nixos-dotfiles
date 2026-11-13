@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   #  programs.starship.enable = true;
 
   programs.zsh = {
@@ -12,14 +8,19 @@
     };
 
     promptInit = ''
-      bindkey '^[[1;5C' forward-word
-      bindkey '^[[1;5D' backward-word
+      bindkey '^U' backward-kill-line                   # ctrl + U
+      bindkey '^[[3;5~' kill-word                       # ctrl + Supr
+      bindkey '^[[3~' delete-char                       # delete
+      bindkey '^[[1;5C' forward-word                    # ctrl + ->
+      bindkey '^[[1;5D' backward-word                   # ctrl + <-
 
       source <(fzf --zsh)
       eval "$(zoxide init zsh)"
 
       bindkey -r '\ec'
       bindkey '^F' fzf-cd-widget
+
+
     '';
   };
 
@@ -36,7 +37,7 @@
       command_timeout = 1300;
       scan_timeout = 50;
 
-      format = "$env_var$directory$fill$line_break$username$hostname$character";
+      format = "$env_var$directory$nix_shell$line_break$username$hostname$character";
 
       character = {
         success_symbol = "[](bold green) ";
@@ -53,7 +54,7 @@
         format = "@[$ssh_symbol$hostname]($style) ";
       };
 
-      # nix_shell.format = "via [$symbol$state( ($name))]($style) ";
+      nix_shell.format = "via [$symbol$state( ($name))]($style) ";
       env_var = {
         variable = "STARSHIP_SHELL";
         format = "\\[[$env_value](light blue bold)\\] ";
@@ -95,6 +96,11 @@
     newSession = true;
     baseIndex = 1;
 
+    plugins = with pkgs.tmuxPlugins; [
+      dotbar
+      catppuccin
+    ];
+
     extraConfig = ''
 
       bind  c  new-window      -c "#{pane_current_path}"
@@ -112,8 +118,23 @@
       bind -n M-j select-pane -D
 
       set-option -ga terminal-overrides ",*:Tc"
-
       set-option -g allow-rename off
+
+      set -g mouse on
+      set -g mode-keys vi
+
+      set -sg escape-time 10
+
+      set -g @plugin 'catppuccin/tmux#v2.3.2'
+      set -g @plugin 'vaaleyard/tmux-dotbar'
+
+      set -g @tmux-dotbar-bg "#1e1e2e"
+      set -g @tmux-dotbar-fg "#585b70"
+      set -g @tmux-dotbar-fg-current "#cdd6f4"
+      set -g @tmux-dotbar-fg-session "#9399b2"
+      set -g @tmux-dotbar-fg-prefix "#cba6f7"
+
+      set -g @tmux-dotbar-position top
     '';
   };
 }

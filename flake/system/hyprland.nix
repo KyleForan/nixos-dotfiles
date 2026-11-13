@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -12,15 +13,14 @@
   hardware.graphics.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # Wayland Bar
-    waybar
+    ashell
 
     # Notifications
     dunst
     libnotify
 
     # App Launcher
-    rofi
+    hyprlauncher
 
     # brightness control
     brightnessctl
@@ -34,6 +34,14 @@
 
     # lock screen
     hyprlock
+
+    # Screenshots
+    grim
+    slurp
+    swappy
+
+    # Clipboard
+    wl-clipboard
   ];
 
   # For Screensharing

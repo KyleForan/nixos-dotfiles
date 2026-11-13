@@ -14,3 +14,11 @@ vim.keymap.set("n", "<A-j>", ":m .+1<CR>==") -- move line up(n)
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+vim.keymap.set('n', 'gb', '<cmd>b#<CR>')
+
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+
+vim.keymap.set('n', '<leader>st', ':split | terminal<CR>')
+vim.keymap.set('n', '<leader>sv', ':vsplit | terminal<CR>')
+

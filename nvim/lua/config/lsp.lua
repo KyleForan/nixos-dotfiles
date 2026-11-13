@@ -1,14 +1,5 @@
-vim.lsp.enable({ "lua_ls", "nil_ls", "pyright" })
+vim.lsp.enable({ "lua_ls", "nil_ls", "pyright", "rust_analyzer", "ts_ls" })
 vim.diagnostic.config({ virtual_text = true })
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(ev)
-    local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-    if client:supports_method('textDocument/completion') then
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-    end
-  end
-})
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -28,13 +19,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, o)
   end,
 })
-
-
-vim.keymap.set('i', '<Tab>', function()
-  if vim.fn.pumvisible() == 1 then
-    return '<C-y>'
-  end
-  return '<Tab>'
-end, { expr = true })
-
-vim.cmd("set completeopt+=noselect")

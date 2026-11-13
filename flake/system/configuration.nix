@@ -18,18 +18,35 @@
     ./steam.nix
     #     ./nvim
     ./nvim.nix
-    #    ./hyprland.nix
+    ./hyprland.nix
     ./container.nix
     ./kde.nix
     ./git.nix
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  boot.initrd.availableKernelModules = ["xhci_pci" "uas" "usbcore" "usb_storage"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "uas"
+    "usbcore"
+    "usb_storage"
+  ];
   services.udisks2.enable = true;
 
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [libseccomp];
+  programs.nix-ld.libraries = with pkgs; [
+    zlib
+    libjpeg
+    libtiff
+    freetype
+    lcms2
+    libwebp
+    openjpeg
+    libseccomp
+  ];
 
   # Ensure latest kernals
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -37,19 +54,12 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  #
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
 
-    extraPackages = with pkgs; [
-      sddm-astronaut
-    ];
-
-    theme = "sugar-dark";
-  };
-
-  networking.nameservers = ["192.168.0.141" "192.168.0.1" "1.1.1.1"];
+  networking.nameservers = [
+    "192.168.0.141"
+    "192.168.0.1"
+    "1.1.1.1"
+  ];
   #   networking.hosts = {
   #     "192.168.0.141" =  ["router.lab" "pihole.lab"];
   #   };
@@ -91,6 +101,8 @@
     variant = "";
   };
 
+  # system.keyboard.swapCapsLockAndEscape = true;
+
   # Configure console keymap
   console.keyMap = "us";
 
@@ -98,7 +110,10 @@
   users.users.default = {
     isNormalUser = true;
     description = "default";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };
